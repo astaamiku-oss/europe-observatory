@@ -1,0 +1,5 @@
+const cards=[...document.querySelectorAll('.report-card')];
+const search=document.querySelector('#search');let category='全部';
+function filter(){const query=(search?.value||'').trim().toLowerCase();let n=0;cards.forEach(card=>{const show=(category==='全部'||card.dataset.category===category)&&card.dataset.search.includes(query);card.hidden=!show;if(show)n++});const count=document.querySelector('#count');if(count)count.textContent=`显示 ${n} / ${cards.length} 份报告`;const empty=document.querySelector('#empty');if(empty)empty.hidden=n!==0}
+document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{category=btn.dataset.filter;document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));filter()}));search?.addEventListener('input',filter);
+const bar=document.querySelector('.progress');if(bar){const update=()=>{const max=document.documentElement.scrollHeight-innerHeight;bar.style.width=`${max>0?scrollY/max*100:0}%`};addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update()}
